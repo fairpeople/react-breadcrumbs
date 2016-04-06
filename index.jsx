@@ -53,7 +53,7 @@ class Breadcrumbs extends React.Component {
     return name;
   }
 
-  _processRoute(route,routesLength,crumbsLength,isRoot,createElement) {
+  _processRoute(route,routesLength,crumbsLength,isRoot,createElement,index) {
     //if there is no route path defined and we are set to hide these then do so
     if(!route.path && this.props.hideNoPath) return null;
 
@@ -131,7 +131,7 @@ class Breadcrumbs extends React.Component {
         link = name;
       }
       return !createElement ? link:
-        React.createElement(this.props.itemElement, { key: Math.random()*100 }, link, separator);
+        React.createElement(this.props.itemElement, { key: index }, link, separator);
     }
 
     return null;
@@ -191,7 +191,7 @@ class Breadcrumbs extends React.Component {
         route.path = parentPath;
       }
 
-      let result = this._processRoute(route,routes.length,crumbs.length,isRoot,createElement);
+      let result = this._processRoute(route,routes.length,crumbs.length,isRoot,createElement, index);
       if (result) {
         crumbs.push(result);
       }
