@@ -21,6 +21,9 @@ class Breadcrumbs extends React.Component {
 
   _getDisplayName(route) {
     let name = null;
+    
+    if (this.props.nameOverride && route.nameOverride)
+      return this.props.nameOverride;
 
     if(route.indexRoute) {
       name = route.indexRoute.displayName || null;
