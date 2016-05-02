@@ -1,2 +1,310 @@
-"use strict";function _interopRequireDefault(e){return e&&e.__esModule?e:{"default":e}}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _possibleConstructorReturn(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}Object.defineProperty(exports,"__esModule",{value:!0});var _createClass=function(){function e(e,t){for(var r=0;r<t.length;r++){var a=t[r];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}return function(t,r,a){return r&&e(t.prototype,r),a&&e(t,a),t}}(),_react=require("react"),_react2=_interopRequireDefault(_react),_reactRouter=require("react-router"),_exenv=require("exenv"),_exenv2=_interopRequireDefault(_exenv),Breadcrumbs=function(e){function t(){_classCallCheck(this,t);var e=_possibleConstructorReturn(this,Object.getPrototypeOf(t).call(this));return e.displayName="Breadcrumbs",e}return _inherits(t,e),_createClass(t,[{key:"_getDisplayName",value:function(e){var t=null;return this.props.nameOverride&&e.nameOverride?this.props.nameOverride:(t=e.indexRoute?e.indexRoute.displayName||null:e.displayName||null,!t&&e.name&&(t=e.name),!t&&this.props.displayMissing&&(t=this.props.displayMissingText),t)}},{key:"_resolveRouteName",value:function(e){var t=this._getDisplayName(e);return!t&&e.breadcrumbName&&(t=e.breadcrumbName),!t&&e.name&&(t=e.name),t}},{key:"_processRoute",value:function(e,t,r,a,s){var p=this;if(!e.path&&this.props.hideNoPath)return null;var n="",o="",i="",u=this._resolveRouteName(e);if(u&&"excludes"in this.props&&this.props.excludes.some(function(e){return e===u}))return null;var l=a;l&&(l=!!e.childRoutes,l=t!==r+1),n=t!==r+1?this.props.separator:"",l||(n=""),e.hasOwnProperty("breadcrumblink")&&(l=e.breadcrumblink),this.props.params&&(o=Object.keys(this.props.params).map(function(e){return i=e,p.props.params[e]}));var c=e.path.split("/")[e.path.split("/").length-1],h=void 0;if(e.path.split("/").map(function(t){if(":"==t.substring(0,1)&&p.props.params){h=Object.keys(p.props.params).map(function(e){return p.props.params[e]});var r=e.path.split("/").map(function(e){return":"==e.substring(0,1)?h.shift():e});e.path=r.reduce(function(e,t){return e+"/"+t}),e.staticName||":"!=c.substring(0,1)||(u=r.reduce(function(e,t){return t}))}}),u){if(this.props.prettify&&(u=u.replace(/-/g," "),u=u.replace(/\w\S*/g,function(e){return e.charAt(0).toUpperCase()+e.substr(1).toLowerCase()})),l)var f=s?_react2["default"].createElement(_reactRouter.Link,{to:e.path,params:e.params},u):u;else f=u;return s?_react2["default"].createElement(this.props.itemElement,{key:100*Math.random()},f,n):f}return null}},{key:"_buildRoutes",value:function(e,t){var r=this,a=[],s=e[1]&&e[1].hasOwnProperty("path"),p="/",n=[];return e.forEach(function(e,t){var a=JSON.parse(JSON.stringify(e));"props"in a&&"path"in a.props&&(a.path=a.props.path,a.children=a.props.children,a.name=a.props.name),a.path&&("/"===a.path.charAt(0)?p=a.path:("/"!==p.charAt(p.length-1)&&(p+="/"),p+=a.path)),t>0&&a.path&&"/"!==a.path.charAt(0)&&(a.path=p);var s=r._resolveRouteName(a);"excludes"in r.props&&r.props.excludes.some(function(e){return e===s})||n.push(a)}),e=n,e.map(function(n,o){if(!n)return null;"props"in n&&"path"in n.props&&(n.path=n.props.path,n.children=n.props.children,n.name=n.props.name),n.path&&("/"===n.path.charAt(0)?p=n.path:("/"!==p.charAt(p.length-1)&&(p+="/"),p+=n.path)),o>0&&n.path&&"/"!==n.path.charAt(0)&&(n.path=p);var i=r._processRoute(n,e.length,a.length,s,t);i&&a.push(i)}),_exenv2["default"].canUseDOM&&window&&window.document&&"setDocumentTitle"in this.props&&this.props.setDocumentTitle&&(window.document.title=a[a.length-1].props.children[0]),t?_react2["default"].createElement(this.props.wrapperElement,{className:this.props.customClass},a):a}},{key:"render",value:function(){var e=arguments.length<=0||void 0===arguments[0]?!0:arguments[0];return this._buildRoutes(this.props.routes,e)}}]),t}(_react2["default"].Component);Breadcrumbs.propTypes={separator:_react2["default"].PropTypes.string,displayMissing:_react2["default"].PropTypes.bool,prettify:_react2["default"].PropTypes.bool,displayMissingText:_react2["default"].PropTypes.string,displayName:_react2["default"].PropTypes.string,breadcrumbName:_react2["default"].PropTypes.string,wrapperElement:_react2["default"].PropTypes.string,itemElement:_react2["default"].PropTypes.string,customClass:_react2["default"].PropTypes.string,excludes:_react2["default"].PropTypes.arrayOf(_react2["default"].PropTypes.string),hideNoPath:_react2["default"].PropTypes.bool,routes:_react2["default"].PropTypes.arrayOf(_react2["default"].PropTypes.object).isRequired,setDocumentTitle:_react2["default"].PropTypes.bool},Breadcrumbs.defaultProps={separator:" > ",displayMissing:!0,displayMissingText:"Missing name prop from Route",wrapperElement:"div",itemElement:"span",customClass:"breadcrumbs",excludes:[""],prettify:!1,hideNoPath:!0,setDocumentTitle:!1},Breadcrumbs.contextTypes={routes:_react2["default"].PropTypes.array,params:_react2["default"].PropTypes.array},exports["default"]=Breadcrumbs;
-//# sourceMappingURL=dist/react-breadcrumbs.min.js.map
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = require('react-router');
+
+var _exenv = require('exenv');
+
+var _exenv2 = _interopRequireDefault(_exenv);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @class Breadcrumbs
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @description New breadcrumbs class based on ES6 structure.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @exports Breadcrumbs
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @version 1.1.11
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @extends component
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @requires react
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @requires react-router
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+var Breadcrumbs = function (_React$Component) {
+  _inherits(Breadcrumbs, _React$Component);
+
+  function Breadcrumbs() {
+    _classCallCheck(this, Breadcrumbs);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Breadcrumbs).call(this));
+
+    _this.displayName = "Breadcrumbs";
+    return _this;
+  }
+
+  _createClass(Breadcrumbs, [{
+    key: '_getDisplayName',
+    value: function _getDisplayName(route) {
+      var name = null;
+
+      if (this.props.nameOverride && route.nameOverride) return this.props.nameOverride;
+
+      if (route.indexRoute) {
+        name = route.indexRoute.displayName || null;
+      } else {
+        name = route.displayName || null;
+      }
+
+      //check to see if a custom name has been applied to the route
+      if (!name && !!route.name) {
+        name = route.name;
+      }
+
+      //if the name exists and it's in the excludes list exclude this route
+      //if (name && this.props.excludes.some(item => item === name)) return null;
+
+      if (!name && this.props.displayMissing) {
+        name = this.props.displayMissingText;
+      }
+
+      return name;
+    }
+  }, {
+    key: '_resolveRouteName',
+    value: function _resolveRouteName(route) {
+      var name = this._getDisplayName(route);
+      if (!name && route.breadcrumbName) name = route.breadcrumbName;
+      if (!name && route.name) name = route.name;
+      return name;
+    }
+  }, {
+    key: '_processRoute',
+    value: function _processRoute(route, routesLength, crumbsLength, isRoot, createElement, index) {
+      var _this2 = this;
+
+      //if there is no route path defined and we are set to hide these then do so
+      if (!route.path && this.props.hideNoPath) return null;
+
+      var separator = "";
+      var paramName = "";
+      var pathValue = "";
+      var name = this._resolveRouteName(route);
+      if (name && 'excludes' in this.props && this.props.excludes.some(function (item) {
+        return item === name;
+      })) return null;
+
+      var makeLink = isRoot;
+
+      // don't make link if route doesn't have a child route
+      if (makeLink) {
+        makeLink = route.childRoutes ? true : false;
+        makeLink = routesLength !== crumbsLength + 1;
+      }
+
+      // set up separator
+      separator = routesLength !== crumbsLength + 1 ? this.props.separator : "";
+      if (!makeLink) separator = "";
+
+      // don't make link if route has a disabled breadcrumblink prop
+      if (route.hasOwnProperty("breadcrumblink")) {
+        makeLink = route.breadcrumblink;
+      }
+
+      // find param name (if provided)
+      if (this.props.params) {
+        paramName = Object.keys(this.props.params).map(function (param) {
+          pathValue = param;
+          return _this2.props.params[param];
+        });
+      }
+
+      // Replace route param with real param (if provided)
+      var currentKey = route.path.split("/")[route.path.split("/").length - 1];
+      var keyValue = void 0;
+      route.path.split("/").map(function (link) {
+        if (link.substring(0, 1) == ":") {
+          if (_this2.props.params) {
+            keyValue = Object.keys(_this2.props.params).map(function (param) {
+              return _this2.props.params[param];
+            });
+            var pathWithParam = route.path.split("/").map(function (link) {
+              if (link.substring(0, 1) == ":") {
+                return keyValue.shift();
+              } else {
+                return link;
+              }
+            });
+            route.path = pathWithParam.reduce(function (start, link) {
+              return start + "/" + link;
+            });
+            //if(!route.staticName && currentKey.substring(0,1)==":")
+            //  name=pathWithParam.reduce((start,link)=>{return link;});
+          }
+        }
+      });
+      if (name) {
+
+        if (this.props.prettify) {
+          // Note: this could be replaced with a more complex prettifier
+          console.log('prettifying');
+          name = name.replace(/-/g, ' ');
+          name = name.replace(/\w\S*/g, function (txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+          });
+        }
+
+        if (makeLink) {
+          var link = !createElement ? name : _react2.default.createElement(_reactRouter.Link, {
+            to: route.path,
+            params: route.params
+          }, name);
+        } else {
+          link = name;
+        }
+        return !createElement ? link : _react2.default.createElement(this.props.itemElement, { key: index }, link, separator);
+      }
+
+      return null;
+    }
+  }, {
+    key: '_buildRoutes',
+    value: function _buildRoutes(routes, createElement) {
+      var _this3 = this;
+
+      var crumbs = [];
+      var isRoot = routes[1] && routes[1].hasOwnProperty("path");
+      var parentPath = '/';
+
+      var routesWithExclude = [];
+      routes.forEach(function (_route, index) {
+        var route = JSON.parse(JSON.stringify(_route));
+        if ('props' in route && 'path' in route.props) {
+          route.path = route.props.path;
+          route.children = route.props.children;
+          route.name = route.props.name;
+        }
+        if (route.path) {
+          if (route.path.charAt(0) === '/') {
+            parentPath = route.path;
+          } else {
+            if (parentPath.charAt(parentPath.length - 1) !== '/') {
+              parentPath += '/';
+            }
+            parentPath += route.path;
+          }
+        }
+        if (0 < index && route.path && route.path.charAt(0) !== '/') {
+          route.path = parentPath;
+        }
+        var name = _this3._resolveRouteName(route);
+        if (!('excludes' in _this3.props && _this3.props.excludes.some(function (item) {
+          return item === name;
+        }))) routesWithExclude.push(route);
+      });
+      routes = routesWithExclude;
+      routes.map(function (route, index) {
+        if (!route) return null;
+        if ('props' in route && 'path' in route.props) {
+          route.path = route.props.path;
+          route.children = route.props.children;
+          route.name = route.props.name;
+        }
+        if (route.path) {
+          if (route.path.charAt(0) === '/') {
+            parentPath = route.path;
+          } else {
+            if (parentPath.charAt(parentPath.length - 1) !== '/') {
+              parentPath += '/';
+            }
+            parentPath += route.path;
+          }
+        }
+
+        if (0 < index && route.path && route.path.charAt(0) !== '/') {
+          route.path = parentPath;
+        }
+
+        var result = _this3._processRoute(route, routes.length, crumbs.length, isRoot, createElement, index);
+        if (result) {
+          crumbs.push(result);
+        }
+      });
+      if (_exenv2.default.canUseDOM) {
+        if (window && window.document) {
+          if ('setDocumentTitle' in this.props && this.props.setDocumentTitle) {
+            window.document.title = crumbs[crumbs.length - 1].props.children[0];
+          }
+        }
+      }
+
+      return !createElement ? crumbs : _react2.default.createElement(this.props.wrapperElement, { className: this.props.customClass }, crumbs);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var createElement = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
+
+      return this._buildRoutes(this.props.routes, createElement);
+    }
+  }]);
+
+  return Breadcrumbs;
+}(_react2.default.Component);
+
+/**
+ * @property PropTypes
+ * @description Property types supported by this component
+ * @type {{separator: *, displayMissing: *, displayName: *, breadcrumbName: *, wrapperElement: *, itemElement: *, customClass: *, excludes: *}}
+ */
+
+
+Breadcrumbs.propTypes = {
+  separator: _react2.default.PropTypes.string,
+  displayMissing: _react2.default.PropTypes.bool,
+  prettify: _react2.default.PropTypes.bool,
+  displayMissingText: _react2.default.PropTypes.string,
+  displayName: _react2.default.PropTypes.string,
+  breadcrumbName: _react2.default.PropTypes.string,
+  wrapperElement: _react2.default.PropTypes.string,
+  itemElement: _react2.default.PropTypes.string,
+  customClass: _react2.default.PropTypes.string,
+  excludes: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.string),
+  hideNoPath: _react2.default.PropTypes.bool,
+  routes: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.object).isRequired,
+  setDocumentTitle: _react2.default.PropTypes.bool
+};
+
+/**
+ * @property defaultProps
+ * @description sets the default values for propTypes if they are not provided
+ * @type {{separator: string, displayMissing: boolean, wrapperElement: string, itemElement: string, customClass: string}}
+ */
+Breadcrumbs.defaultProps = {
+  separator: " > ",
+  displayMissing: true,
+  displayMissingText: "Missing name prop from Route",
+  wrapperElement: "div",
+  itemElement: "span",
+  customClass: "breadcrumbs",
+  excludes: [''],
+  prettify: false,
+  hideNoPath: true,
+  setDocumentTitle: false
+};
+
+/**
+ * @property contextTypes
+ * @description List of objects to incorporate into the context of this class
+ * @type {{routes: *}}
+ */
+Breadcrumbs.contextTypes = {
+  routes: _react2.default.PropTypes.array,
+  params: _react2.default.PropTypes.array
+};
+
+exports.default = Breadcrumbs;
+
