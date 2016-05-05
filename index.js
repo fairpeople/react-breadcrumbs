@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -51,7 +53,14 @@ var Breadcrumbs = function (_React$Component) {
     value: function _getDisplayName(route) {
       var name = null;
 
-      if (this.props.nameOverride && route.nameOverride) return this.props.nameOverride;
+      if (this.props.nameOverride && route.nameOverride) {
+        console.log(this.props.nameOverride, this);
+        if (_typeof(this.props.nameOverride) == 'object') {
+          return this.props.nameOverride[route.name] || this.props.nameOverride[route.displayName];
+        } else {
+          return this.props.nameOverride;
+        }
+      }
 
       if (route.indexRoute) {
         name = route.indexRoute.displayName || null;
@@ -141,8 +150,9 @@ var Breadcrumbs = function (_React$Component) {
             route.path = pathWithParam.reduce(function (start, link) {
               return start + "/" + link;
             });
-            //if(!route.staticName && currentKey.substring(0,1)==":")
-            //  name=pathWithParam.reduce((start,link)=>{return link;});
+            if (!route.staticName && currentKey.substring(0, 1) == ":") name = pathWithParam.reduce(function (start, link) {
+              return link;
+            });
           }
         }
       });
