@@ -54,7 +54,6 @@ var Breadcrumbs = function (_React$Component) {
       var name = null;
 
       if (this.props.nameOverride && route.nameOverride) {
-        console.log(this.props.nameOverride, this);
         if (_typeof(this.props.nameOverride) == 'object') {
           return this.props.nameOverride[route.name] || this.props.nameOverride[route.displayName];
         } else {
